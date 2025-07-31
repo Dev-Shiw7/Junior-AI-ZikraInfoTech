@@ -1,0 +1,23 @@
+
+{
+  "billing": [
+    "Customers are billed monthly unless they cancel before the renewal date.",
+    "Refunds require approval by a human manager.",
+    "Double charges may occur due to system errors. Contact billing@company.com."
+  ],
+  "technical": [
+    "Login failures can be resolved by clearing cache and cookies.",
+    "Our mobile app supports Android 9+ and iOS 13+.",
+    "If a user can't reset their password, escalate to engineering."
+  ],
+  "security": [
+    "Never provide password reset links via email.",
+    "Two-factor authentication is mandatory for admin accounts.",
+    "For data breach reports, escalate immediately."
+  ],
+  "general": [
+    "Our support hours are 9am–5pm, Monday through Friday.",
+    "All agents are trained in handling Tier 1 queries.",
+    "Users can update their contact info via the profile page."
+  ]
+}
