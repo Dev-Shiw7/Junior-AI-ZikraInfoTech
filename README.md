@@ -25,35 +25,75 @@ The agent aims to streamline customer support by resolving routine inquiries ind
   * **LangGraph Studio Integration:** Easily visualize, debug, and iterate on the agent's workflow.
   * **LangSmith Tracing Support:** Integrate with LangSmith for in-depth tracing and performance analysis.
 
+
+## ASCII
+
+
+```
+
+\+---------------+
+|    START      |
+\+-------+-------+
+|
+v
+\+-------+-------+     User Input (Subject, Description)
+|  INPUT Node   |
+\+-------+-------+
+|
+v
+\+-------+-------+     Classify ticket (e.g., billing, technical)
+| CLASSIFY Node |
+\+-------+-------+
+|
+v
+\+-------+-------+     Retrieve context from knowledge base (RAG)
+| RETRIEVE Node |
+\+-------+-------+
+|
+v
+\+-------+-------+     Draft response using LLM & context
+|  DRAFT Node   | \<----------------+
+\+-------+-------+                  |
+|                          |
+v                          |
+\+-------+-------+     Review drafted response
+|  REVIEW Node  |
+\+-------+-------+
+|
+| Conditional Routing (route\_review function)
+|
+\+-------+-------+--------------------------+
+|       |                                  |
+v       v                                  v
+\+-------+-------+  (IF APPROVED)    +-------+-------+ (IF REJECTED & Attempts \< 2)
+|      END      |                   |  RETRY Node   |
+\+---------------+                   +-------+-------+
+|
+| (Prep for next draft)
+|
+\+-------------------------\>
+^
+|
+| (IF REJECTED & Attempts \>= 2)
+|
+\+-------+-------+
+| ESCALATE Node |
+\+-------+-------+
+|
+v
+\+---------------+
+|      END      |
+\+---------------+
+
+```
+
+
 -----
 
-## 💡 How It Works (Workflow Overview)
+## LangGraph Studio Workflow
 
-The agent operates as a state machine orchestrated by LangGraph, enabling complex decision-making and iterative loops.
+<img width="307" height="263" alt="image" src="https://github.com/user-attachments/assets/c00ccc45-d0aa-49c0-a836-1f1fdd825d7d" />
 
-```mermaid
-graph TD
-    A[Start] --> B(Receive Input);
-    B --> C{Classify Ticket};
-    C --> D[Retrieve Context (RAG)];
-    D --> E(Draft Response);
-    E --> F{Review Draft Quality};
-    F -- Approved --> G[End Workflow (Success)];
-    F -- Rejected (Attempts < 2) --> H(Provide Feedback);
-    H --> E;
-    F -- Rejected (Attempts >= 2) --> I[Log Escalation to CSV];
-    I --> G;
-
-    style A fill:#DDF,stroke:#333,stroke-width:2px;
-    style G fill:#DDF,stroke:#333,stroke-width:2px;
-    style B fill:#FFF,stroke:#333,stroke-width:1px;
-    style C fill:#FFF,stroke:#333,stroke-width:1px;
-    style D fill:#FFF,stroke:#333,stroke-width:1px;
-    style E fill:#FFF,stroke:#333,stroke-width:1px;
-    style F fill:#FFF,stroke:#333,stroke-width:1px;
-    style H fill:#FFF,stroke:#333,stroke-width:1px;
-    style I fill:#FFF,stroke:#333,stroke-width:1px;
-```
 
 **Simplified Flow:**
 
