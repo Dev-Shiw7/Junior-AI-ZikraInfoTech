@@ -306,6 +306,8 @@ Junior-AI-ZikraInfoTech/
 
 -----
 
+## NOTE: The commented code in files like review.py and retrieve.py is to generate context from Ollama Mistral. I tried experimenting the significance and relativity. If someone wants to see its working, they can comment out the current code and used the currently commented code. 
+
 ## 🤝 Contributing
 
 Contributions are welcome\! Feel free to open issues or submit pull requests.
